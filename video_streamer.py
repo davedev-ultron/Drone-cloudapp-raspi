@@ -48,6 +48,8 @@ logging.info('FPS: %s  Quality: %s  Width %s Height %s  Grayscale: %s',
 logging.info('Drone ID: %s  Video Recipient: %s:%s', str(DRONE_ID), str(HOST_IP), str(VIDEO_PORT))
 
 camera = None
+video_socket = None
+
 # while loop will make sure our app continues to run
 while(True):
     try:
@@ -70,8 +72,8 @@ while(True):
         # if frame is lost thats fine
         # TCP will introduce additional latency because it guarantees every byte will be sent
         # FOR CONTROLS it is important but not here
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.connect((HOST_IP, VIDEO_PORT))
+        video_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        video_socket.connect((HOST_IP, VIDEO_PORT))
         
         logging.info("Socket Opened, Video Streaming is started")
         
