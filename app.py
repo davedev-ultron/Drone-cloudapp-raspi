@@ -47,6 +47,9 @@ if __name__ == '__main__':
     while(True):
         try:
             # if successful then we break cycle
+            # here we are defining our drone object which is an abstraction of real life
+            # drone anything specific to the drone we will execute against this object
+            # abstarction could be simulator or machine
             drone = Drone(config)
             break
         except Exception as e:
