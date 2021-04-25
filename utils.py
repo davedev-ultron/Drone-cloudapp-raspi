@@ -10,9 +10,11 @@ class Utils:
 
     def readNetworkMessage(socket):
         
+        # read first 4 bytes that describe size
         body_size = int.from_bytes(socket.recv(4), byteorder='big')
         body = socket.recv(body_size)
         
+        # this will contain proto object array
         return body
         
         
