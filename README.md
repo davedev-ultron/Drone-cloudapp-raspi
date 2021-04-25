@@ -11,3 +11,5 @@ for the other project I had to install java jdk: https://adoptopenjdk.net/instal
 
 
 droneapp.service is to make the app run as a service
+
+Contact info: peter_black@angelic.com

@@ -19,8 +19,9 @@ class Utils:
         
         
     def createNetworkMessage(msg_body_bytes):
-        
+        # serialized data from proto object that is byte array
         length = len(msg_body_bytes)
+        # add the header with size, 4 bytes should be huge 
         length_encoded_to_4_bytes = (length).to_bytes(4, byteorder='big')
         
         return length_encoded_to_4_bytes + msg_body_bytes 
