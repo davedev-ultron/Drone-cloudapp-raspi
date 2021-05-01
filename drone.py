@@ -8,10 +8,8 @@ class Drone:
     def __init__(self, configurations):
         drone_id      = configurations['drone']['id']
         use_simulator = configurations['drone']['use-simulator'].lower() == 'true'
-        linux_device  = configurations['drone']['linux_device']
+        arduino_controller  = configurations['drone']['arduino_controller']
         sim_port      = int( configurations['drone']['simulator-port'])
-        takeoff_alt   = int( configurations['drone']['takeoff-alt'])
-        rtl_alt       = int( configurations['drone']['rtl-alt'])
         # in the constructor we extract configurations that we need
 
         # if we use simulator we need to open specific ip address that is our raspi connected to
@@ -26,13 +24,11 @@ class Drone:
         else:
             # if not using simulator then we will connect to pixahawk flight controller that
             # is connected to telemety port that is a serial port that is defined in config linux device
-            self.vehicle = connect(linux_device, wait_ready=True, baud=57600)
-            logging.info('Connected to Flight Controller Hardware on:  %s ', linux_device)
+            self.vehicle = connect(arduino_controller, wait_ready=True, baud=9600)
+            logging.info('Connected to Arduino Controller Hardware on:  %s Baud: 9600', arduino_controller)
             
         # create local variables    
         self.drone_id = drone_id
-        self.takeoff_alt = takeoff_alt
-        self.rtl_alt = rtl_alt
         self.state = "DISARMED"
         self.is_active =True
         self.control_tab = ControlTab(self) # will encapsulate all the logic (take-off, landing, etc), will know mav link commands (think of this as a control panel)
@@ -46,7 +42,7 @@ class Drone:
         # that are accessible via drone kit
         # want to familiarize myself with their website for more advanced use
         if self.vehicle.location.global_relative_frame.alt != None:
-          drone_data.altitude = self.vehicle.location.global_relative_frame.alt
+          drone_data.altitude = self.vehicle.location.lobal_relative_frame.alt
 
         if self.vehicle.location.global_relative_frame.lat != None:		  
           drone_data.latitude = self.vehicle.location.global_relative_frame.lat
@@ -72,9 +68,6 @@ class Drone:
         # drone doesnt know but control tab does
         self.control_tab.stopMovement()
     
-    def return_to_launch(self):
-        self.control_tab.goHome(self.rtl_alt)
-    
     def togleLights(self):
         # control tab know gpio outputs of raspi and set them to high or low
         self.control_tab.togleLights()
@@ -87,7 +80,7 @@ class Drone:
     # checks what code it is and will call control tab
     def executeCommand(self, command):
         if command.code == 7:
-            self.control_tab.goHome(self.rtl_alt)
+            # self.control_tab.goHome(self.rtl_alt)
             logging.debug('Executing Code: %s for Command: %s', str(command.code), 'Go Home')
             return
         if command.code == 8:
@@ -96,7 +89,7 @@ class Drone:
             return
         if command.code == 9:
             self.state = "ARMING"
-            self.control_tab.armAndTakeoff(self.takeoff_alt)
+            # self.control_tab.armAndTakeoff(self.takeoff_alt)
             self.state = "READY"
             logging.debug('Executing Code: %s for Command: %s', str(command.code), 'Arm And Takeoff')
             return
