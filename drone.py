@@ -2,6 +2,7 @@ import time, logging, netifaces
 from dronekit import connect, VehicleMode, Command
 import ProtoData_pb2 as proto
 from control_tab import ControlTab
+import serial
 
 
 class Drone:
@@ -24,7 +25,7 @@ class Drone:
         else:
             # if not using simulator then we will connect to pixahawk flight controller that
             # is connected to telemety port that is a serial port that is defined in config linux device
-            self.vehicle = connect(arduino_controller, wait_ready=True, baud=9600)
+            self.vehicle = serial.Serial(arduino_controller, 9600)
             logging.info('Connected to Arduino Controller Hardware on:  %s Baud: 9600', arduino_controller)
             
         # create local variables    
@@ -41,20 +42,6 @@ class Drone:
         # there is many parameters that can be accessed in vehicle object
         # that are accessible via drone kit
         # want to familiarize myself with their website for more advanced use
-        if self.vehicle.location.global_relative_frame.alt != None:
-          drone_data.altitude = self.vehicle.location.lobal_relative_frame.alt
-
-        if self.vehicle.location.global_relative_frame.lat != None:		  
-          drone_data.latitude = self.vehicle.location.global_relative_frame.lat
-
-        if self.vehicle.location.global_relative_frame.lon != None:		  
-          drone_data.longitude = self.vehicle.location.global_relative_frame.lon
-
-        if self.vehicle.battery.voltage != None:
-          drone_data.voltage = self.vehicle.battery.voltage
-
-        if self.vehicle.airspeed != None:
-          drone_data.speed = float(self.vehicle.airspeed)
 
         drone_data.state = self.state
         drone_data.drone_id = str(self.drone_id)
