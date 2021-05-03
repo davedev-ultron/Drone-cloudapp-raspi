@@ -43,3 +43,6 @@ FPS: 1  Quality: 60  Width 640 Height 480  Grayscale: True
 50842 at Quality: 60  Width 1280 Height 720  Grayscale: True
 92982 at Quality: 60  Width 1920 Height 1080  Grayscale: True
 72394 at Quality: 90  Width 640 Height 480  Grayscale: false 640, and message is too long
+
+PART 45 SHOWS CREATING VIDEOSTREAM SERVICE ON RASPI
+PART 06 SHOWS CREATING DRONE SERVICE

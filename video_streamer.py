@@ -99,7 +99,7 @@ while(True):
             # Size was 19000 at width 640, height 480, grayscale true, quality 60
             # Size was 34438 at width 640, height 480, grayscale false, quality 60
             # Size was 72394 at width 640, height 480, grayscale false, quality 90, and message is too long
-            logging.debug('UDP Package size: %s', str(sys.getsizeof(datagramMsgBytes)))
+            # logging.debug('UDP Package size: %s', str(sys.getsizeof(datagramMsgBytes)))
             # sending data
             video_socket.sendall(datagramMsgBytes)
 

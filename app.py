@@ -106,7 +106,7 @@ if __name__ == '__main__':
             # separate process so that we are always sending video no matter what
             
             # VIDEO WE CAN RUN FROM ANOTHER PROCESS CAUSE WE DONT COMMUNICATE WITH IT FROM HERE
-            video_streamer_proc = Popen('/usr/bin/python3 ' + APP_DIR + 'video_streamer.py', shell=True)
+            video_streamer_proc = Popen('/usr/bin/python3 ' + APP_DIR + 'video_streamer.py --d' + APP_DIR, shell=True)
             
             # activate receiver thread
             server_message_receiver = DataReceiver(control_server_socket, drone)
