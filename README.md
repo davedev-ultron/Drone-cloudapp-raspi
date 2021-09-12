@@ -1,4 +1,7 @@
-#Libraries to install on raspi
+# Drone - Drone software
+This repo contains the software that runs on the rasberry pi that controls the drone. It communicates over the internet with the java UI.
+
+## Libraries to install on raspi
 
 sudo apt update
 
